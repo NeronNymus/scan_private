@@ -16,7 +16,7 @@ from natsort import natsorted
 
 # Personal packages
 #from backend.backend import start_pool, connect_to_database, query, conn_simple
-from backend.backend import query, conn_simple
+from backend.backend import query, conn_simple, load_env_vars
 from utils.colors import Colors
 
 
@@ -275,6 +275,9 @@ if __name__ == "__main__":
     VALUES 
     (%(ipv4_address)s, %(mac_address)s, %(mac_vendor)s, %(status)s, %(reason)s, %(srtt)s, %(rttvar)s, %(timestamp)s::timestamp, %(alias)s, %(scanned_by)s);
     """
+
+    filename = "exports3.sh"
+    load_env_vars(filename)
 
     # Start a connection to database
     conn = conn_simple()
