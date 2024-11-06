@@ -13,6 +13,7 @@ import ipaddress
 import subprocess
 
 # Personal packages
+from backend.backend import load_env_vars
 from utils.colors import Colors
 
 
@@ -86,6 +87,10 @@ def load_data_db(scan_result):
 
 
 if __name__ == "__main__":
+
+    filename = "exports3.sh"
+    load_env_vars(filename)
+
 
     print("DB_HOST:", os.getenv("DB_HOST"))
     print("DB_NAME:", os.getenv("DB_NAME"))
