@@ -56,7 +56,7 @@ def scan_nmap(scan_dir):
     private_range = get_private_network()
 
     # Create timestamped scan result filename
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     print(Colors.BOLD_WHITE + f"[!] Start private network scan on " + Colors.ORANGE + f" {private_range} " + Colors.R + "at " + Colors.CYAN + f"{timestamp}" + Colors.R)
     os.makedirs(scan_dir, exist_ok=True)
     scan_result = os.path.join(scan_dir, f"{timestamp}_nmap.xml")
