@@ -87,7 +87,7 @@ def load_data_db(scan_result):
 if __name__ == "__main__":
     # Example usage
     project_path = os.getcwd()  # Execute it in the current project path
-    scan_dir = os.path.join(project_path,"scans\\active3")
+    scan_dir = os.path.join(project_path,"scans/active3")
     scan_result = scan_nmap(scan_dir)
     
     load_data_db(scan_result)
