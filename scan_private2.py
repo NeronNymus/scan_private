@@ -5,6 +5,7 @@
 # but not in Windows.
 
 import os
+import sys
 import nmap
 import socket
 import datetime
@@ -85,6 +86,15 @@ def load_data_db(scan_result):
 
 
 if __name__ == "__main__":
+
+    print("DB_HOST:", os.getenv("DB_HOST"))
+    print("DB_NAME:", os.getenv("DB_NAME"))
+    print("DB_USER:", os.getenv("DB_USER"))
+    print("DB_PASSWORD:", os.getenv("DB_PASSWORD"))
+    print("DB_PORT:", os.getenv("DB_PORT"))
+
+
+    sys.exit(0)
     # Example usage
     project_path = os.getcwd()  # Execute it in the current project path
     scan_dir = os.path.join(project_path,"scans/active3")
