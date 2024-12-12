@@ -276,8 +276,8 @@ if __name__ == "__main__":
     (%(ipv4_address)s, %(mac_address)s, %(mac_vendor)s, %(status)s, %(reason)s, %(srtt)s, %(rttvar)s, %(timestamp)s::timestamp, %(alias)s, %(scanned_by)s);
     """
 
-    filename = "exports3.sh"
-    load_env_vars(filename)
+    #filename = "exports3.sh"
+    #load_env_vars(filename)
 
     # Start a connection to database
     conn = conn_simple()

@@ -8,6 +8,7 @@ import os
 import sys
 import nmap
 import socket
+import psutil
 import datetime
 import ipaddress
 import subprocess
@@ -28,34 +29,42 @@ def get_private_ip():
         private_ip_prefix = '.'.join(local_ip.split('.')[:4])
         return private_ip_prefix
     else:
+        print(f"[!] IP:\t{ip}\t{local_ip}")
         print("[x] Quitting because private range resolves to 127.0.0.0/24 or a public IP")
         return None
 
 
 def get_private_network():
-    # Get the local IP and subnet mask
-    hostname = socket.gethostname()
-    local_ip = socket.gethostbyname(hostname)
+    # Get all network interfaces and their addresses
+    interfaces = psutil.net_if_addrs()
     
-    # Check if it's a private IP and calculate network range
-    ip = ipaddress.ip_interface(f"{local_ip}/24")  # Temporary mask
-    if ip.is_private and not local_ip.startswith("127."):
-        # Dynamically calculate the actual network range
-        network = ip.network
-        return str(network)
-    else:
-        print("[x] Quitting because private range resolves to 127.0.0.0/24 or a public IP")
-        return None
+    for iface, addrs in interfaces.items():
+        for addr in addrs:
+            if addr.family == socket.AF_INET:  # Only consider IPv4 addresses
+                ip = addr.address
+                try:
+                    # Check if it's a private IP and not a loopback
+                    ip_obj = ipaddress.ip_interface(f"{ip}/24")  # Temporary mask
+                    if ip_obj.is_private and not ip.startswith("127."):
+                        # Dynamically calculate the actual network range
+                        network = ip_obj.network
+                        print(Colors.BOLD_WHITE + f"[+] Found private IP: " + Colors.ORANGE +  f"{ip}" + Colors.BOLD_WHITE + " on interface " + Colors.GREEN + f"{iface}" + Colors.R)
+                        return str(network)
+                except ValueError:
+                    continue  # Skip invalid addresses
 
+    print("[x] No valid private IP address found on this machine.")
+    return None
 
 def scan_nmap(scan_dir):
     # Get the private IP range
-    private_ip = get_private_ip()
-    if not private_ip:
-        return
+    #private_ip = get_private_ip()
+    #if not private_ip:
+    #    return
 
     #private_range = f"{private_ip}.0/24"
     private_range = get_private_network()
+    print(f"[!] Solving to {private_range}")
 
     # Create timestamped scan result filename
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
@@ -88,18 +97,18 @@ def load_data_db(scan_result):
 
 if __name__ == "__main__":
 
-    filename = "exports3.sh"
+    filename = "exports2"
     load_env_vars(filename)
 
 
-    print("DB_HOST:", os.getenv("DB_HOST"))
-    print("DB_NAME:", os.getenv("DB_NAME"))
-    print("DB_USER:", os.getenv("DB_USER"))
-    print("DB_PASSWORD:", os.getenv("DB_PASSWORD"))
-    print("DB_PORT:", os.getenv("DB_PORT"))
+    #print("DB_HOST:", os.getenv("DB_HOST"))
+    #print("DB_NAME:", os.getenv("DB_NAME"))
+    #print("DB_USER:", os.getenv("DB_USER"))
+    #print("DB_PASSWORD:", os.getenv("DB_PASSWORD"))
+    #print("DB_PORT:", os.getenv("DB_PORT"))
 
 
-    sys.exit(0)
+    #sys.exit(0)
     # Example usage
     project_path = os.getcwd()  # Execute it in the current project path
     scan_dir = os.path.join(project_path,"scans/active3")
