@@ -111,10 +111,9 @@ if __name__ == "__main__":
     #sys.exit(0)
     # Example usage
 
-    os_distro = 'windows'
-    if os_distro == 'linux':
+    if os.name == 'posix':
         project_path = os.getcwd()  # Execute it in the current project path
-    elif os_distro == 'windows':
+    elif os.name == 'nt':
         project_path = "C:\\Users\\jesus\Other\\scan_private" # Hardcoded path
 
     scan_dir = os.path.join(project_path,"scans/active3")
