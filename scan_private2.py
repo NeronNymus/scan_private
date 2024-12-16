@@ -64,7 +64,7 @@ def scan_nmap(scan_dir):
 
     #private_range = f"{private_ip}.0/24"
     private_range = get_private_network()
-    print(f"[!] Solving to {private_range}")
+    print(Colors.GREEN + f"[!] Solving to {private_range}" + Colors.R)
 
     # Create timestamped scan result filename
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
