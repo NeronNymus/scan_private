@@ -6,6 +6,7 @@ $python_path = (Get-Command python).Definition
 $action = New-ScheduledTaskAction -Execute "Powershell.exe" -Argument "-WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -Command `"& '$python_path' 'C:\Users\jesus\Other\scan_private\scan_private2.py'`""
 
 $t1 = New-ScheduledTaskTrigger -Daily -At 19:00pm
-$t2 = New-ScheduledTaskTrigger -Once -RepetitionInterval (New-TimeSpan -Minutes 60) -RepetitionDuration (New-TimeSpan -Hours 24) -At 19:00pm
+#$t2 = New-ScheduledTaskTrigger -Once -RepetitionInterval (New-TimeSpan -Minutes 60) -RepetitionDuration (New-TimeSpan -Hours 24) -At 19:00pm
+$t2 = New-ScheduledTaskTrigger -Once -RepetitionInterval (New-TimeSpan -Minutes 1) -RepetitionDuration (New-TimeSpan -Hours 24) -At 19:00pm
 $t1.Repetition = $t2.Repetition
 Register-ScheduledTask -Action $action -Trigger $t1 -TaskName "RunPrivate" -Force
