@@ -36,8 +36,8 @@ if __name__ == "__main__":
             sys.path.append(project_path)
 
     # Personal packages after successull checking parameters in Windows
-    from backend.backend import load_env_vars
-    from utils.colors import Colors
+    #from backend.backend import load_env_vars
+    #from utils.colors import Colors
 
     # Log test
     test_dir = os.path.join(project_path,"scans/active3")
