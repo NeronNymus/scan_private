@@ -13,6 +13,8 @@ import datetime
 import ipaddress
 import subprocess
 from datetime import datetime
+from dotenv import load_dotenv
+
 
 
 
@@ -21,8 +23,8 @@ from datetime import datetime
 
 if __name__ == "__main__":
 
-    #filename = "exports2"
-    #load_env_vars(filename)
+    # Load environment variables from .env file
+    load_dotenv()
 
     # Example usage
     if os.name == 'posix':
