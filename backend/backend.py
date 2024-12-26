@@ -10,12 +10,6 @@ from subprocess import run, PIPE
 # Personal packages
 from utils.colors import Colors
 
-# Database connection parameters using environment variables
-DB_HOST     = os.getenv('DB_HOST')
-DB_NAME     = os.getenv('DB_NAME')
-DB_USER     = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_PORT     = os.getenv('DB_PORT')
 
 # Function to source environment variables from a file
 def load_env_vars(filename):
@@ -35,6 +29,14 @@ def load_env_vars(filename):
         print(Colors.RED + f"Error loading environment variables: {e}" + Colors.R)
         sys.exit(1)
 
+load_env_vars('.env')
+
+# Database connection parameters using environment variables
+DB_HOST     = os.getenv('DB_HOST')
+DB_NAME     = os.getenv('DB_NAME')
+DB_USER     = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_PORT     = os.getenv('DB_PORT')
 
 # Database connection parameters
 def get_db_params():
