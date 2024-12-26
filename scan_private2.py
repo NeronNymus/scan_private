@@ -13,11 +13,13 @@ import datetime
 import ipaddress
 import subprocess
 from datetime import datetime
+from dotenv import load_dotenv
+
 
 # This personal packages are causing conflicts because are not well imported in Windows environment
 # Change inside the git cloned repository is needed.
-from backend.backend import load_env_vars
-from utils.colors import Colors
+#from backend.backend import load_env_vars
+#from utils.colors import Colors
 
 
 def get_private_ip():
@@ -96,8 +98,11 @@ def load_data_db(scan_result):
 
 if __name__ == "__main__":
 
-    filename = "exports2"
-    load_env_vars(filename)
+    #filename = "exports2"
+    #load_env_vars(filename)
+    # Load environment variables from .env file
+    load_dotenv()
+
 
     # Example usage
     if os.name == 'posix':
