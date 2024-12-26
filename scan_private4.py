@@ -62,7 +62,7 @@ def scan_nmap(scan_dir):
     print(f"[!] Solving to {private_range}")
 
     # Create timestamped scan result filename
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     print(f"[!] Start private network scan on " + f" {private_range} " + "at " + f"{timestamp}")
     os.makedirs(scan_dir, exist_ok=True)
     scan_result = os.path.join(scan_dir, f"{timestamp}_nmap.xml")
