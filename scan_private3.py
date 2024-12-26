@@ -109,7 +109,7 @@ if __name__ == "__main__":
     test_dir = os.path.join(project_path,"scans/active3")
     test_path = os.path.join(test_dir,"test1")
 
-    execution_date = datetime.now().strftime("%Y-%m-%d")
+    execution_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(test_path, 'a') as file:
         print(f"Logged: {execution_date}\tinto {test_path}")
         file.write(f"{execution_date}\n")
