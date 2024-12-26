@@ -6,7 +6,7 @@ $python_path = (Get-Command python).Definition
 # Define the action
 #$action = New-ScheduledTaskAction -Execute "$python_path" -Argument 'C:\Users\jesus\Other\scan_private\scan_private2.py'
 $action = New-ScheduledTaskAction -Execute "Powershell.exe" `
-    -Argument "-WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -Command `"& '$python_path' 'C:\Users\jesus\Other\scan_private\scan_private2.py'`""
+    -Argument "-WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -Command `"& '$python_path' 'C:\Users\jesus\Other\scan_private\scan_private3.py'`""
 
 
 #$t1 = New-ScheduledTaskTrigger -Daily -At 13:00pm
