@@ -14,9 +14,7 @@ import ipaddress
 import subprocess
 from datetime import datetime
 
-# Personal packages
-from backend.backend import load_env_vars
-from utils.colors import Colors
+
 
 
 
@@ -32,6 +30,14 @@ if __name__ == "__main__":
     elif os.name == 'nt':
         project_path = "C:\\Users\\jesus\\Other\\scan_private" # Hardcoded path
         os.makedirs(project_path, exist_ok=True)
+
+        # Get the parent of the parent directory
+        if project_path not in sys.path:
+            sys.path.append(project_path)
+
+    # Personal packages after successull checking parameters in Windows
+    from backend.backend import load_env_vars
+    from utils.colors import Colors
 
     # Log test
     test_dir = os.path.join(project_path,"scans/active3")
