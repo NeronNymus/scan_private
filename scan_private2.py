@@ -42,13 +42,13 @@ def get_private_network():
                 try:
                     # Check if it's a private IP and not a loopback
                     ip_obj = ipaddress.ip_interface(f"{ip}/24")  # Temporary mask
-                    if ip_obj.is_private and not ip.startswith("127."):
+                    if ip_obj.is_private and not ip.startswith("127.") and not ip.startswith("172."):
                         # Dynamically calculate the actual network range
                         network = ip_obj.network
                         print(Colors.BOLD_WHITE + f"[+] Found private IP: " + Colors.ORANGE +  f"{ip}" + Colors.BOLD_WHITE + " on interface " + Colors.GREEN + f"{iface}" + Colors.R)
                         return str(network)
                 except ValueError:
-                    continue  # Skip invalid addresses
+                    continue
 
     print("[x] No valid private IP address found on this machine.")
     return None
