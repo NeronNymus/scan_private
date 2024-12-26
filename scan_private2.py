@@ -18,23 +18,18 @@ from backend.backend import load_env_vars
 from utils.colors import Colors
 
 
-
-
 def get_private_ip():
     # Obtain the local IP address
-    hostname = socket.gethostname()
-    local_ip = socket.gethostbyname(hostname)
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))
+        private_ip = s.getsockname()[0]
+        s.close()
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        private_ip = None
 
-    # Verify if it's within a private IP range
-    ip = ipaddress.ip_address(local_ip)
-    if ip.is_private and not local_ip.startswith("127."):
-        private_ip_prefix = '.'.join(local_ip.split('.')[:4])
-        return private_ip_prefix
-    else:
-        print(f"[!] IP:\t{ip}\t{local_ip}")
-        print("[x] Quitting because private range resolves to 127.0.0.0/24 or a public IP")
-        return None
-
+    return private_ip
 
 def get_private_network():
     # Get all network interfaces and their addresses
