@@ -48,7 +48,8 @@ if __name__ == "__main__":
     execution_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(test_path, 'a') as file:
         print(f"Logged: {execution_date}\tinto {test_path}")
-        file.write(f"{execution_date}\n")
+        file.write(f"{execution_date}\t{__file__}\n")
+
 
     #scan_dir = os.path.join(project_path,"scans/active3")
     #scan_result = scan_nmap(scan_dir)

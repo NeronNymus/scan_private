@@ -109,12 +109,12 @@ if __name__ == "__main__":
 
     # Log test
     test_dir = os.path.join(project_path,"scans/active3")
-    test_path = os.path.join(test_dir,"testo")
+    test_path = os.path.join(test_dir,"test1")
 
     execution_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(test_path, 'a') as file:
         print(f"Logged: {execution_date}\tinto {test_path}")
-        file.write(f"{execution_date}\n")
+        file.write(f"{execution_date}\t{__file__}\n")
 
 
     # Scan attempt
