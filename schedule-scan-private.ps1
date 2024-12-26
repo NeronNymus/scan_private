@@ -10,8 +10,8 @@ $action = New-ScheduledTaskAction -Execute "Powershell.exe" `
 
 
 #$t1 = New-ScheduledTaskTrigger -Daily -At 13:00pm
-$time = "13:00pm"
-$t1 = New-ScheduledTaskTrigger -Daily -At 13:42pm
-$t2 = New-ScheduledTaskTrigger -Once -RepetitionInterval (New-TimeSpan -Minutes 1) -RepetitionDuration (New-TimeSpan -Hours 24) -At 13:42pm
+$time = "13:50pm"
+$t1 = New-ScheduledTaskTrigger -Daily -At "$time"
+$t2 = New-ScheduledTaskTrigger -Once -RepetitionInterval (New-TimeSpan -Minutes 1) -RepetitionDuration (New-TimeSpan -Hours 24) -At "$time"
 $t1.Repetition = $t2.Repetition
 Register-ScheduledTask -Action $action -Trigger $t1 -TaskName "RunPrivate" -Force
