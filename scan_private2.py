@@ -14,7 +14,8 @@ import ipaddress
 import subprocess
 from datetime import datetime
 
-# Personal packages
+# This personal packages are causing conflicts because are not well imported in Windows environment
+# Change inside the git cloned repository is needed.
 from backend.backend import load_env_vars
 from utils.colors import Colors
 
@@ -106,6 +107,17 @@ if __name__ == "__main__":
         #project_path = "C:\\Users\\Public\\Other\\scan_private" # Hardcoded path
         os.makedirs(project_path, exist_ok=True)
 
+    # Log test
+    test_dir = os.path.join(project_path,"scans/active3")
+    test_path = os.path.join(test_dir,"testo")
+
+    execution_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(test_path, 'a') as file:
+        print(f"Logged: {execution_date}\tinto {test_path}")
+        file.write(f"{execution_date}\n")
+
+
+    # Scan attempt
     scan_dir = os.path.join(project_path,"scans/active3")
     scan_result = scan_nmap(scan_dir)
     
