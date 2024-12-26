@@ -14,6 +14,10 @@ import ipaddress
 import subprocess
 from datetime import datetime
 
+# Personal packages
+from backend.backend import load_env_vars
+from utils.colors import Colors
+
 
 
 
@@ -29,6 +33,7 @@ if __name__ == "__main__":
         project_path = "C:\\Users\\jesus\\Other\\scan_private" # Hardcoded path
         os.makedirs(project_path, exist_ok=True)
 
+    # Log test
     test_dir = os.path.join(project_path,"scans/active3")
     test_path = os.path.join(test_dir,"test1")
 
