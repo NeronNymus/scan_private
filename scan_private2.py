@@ -18,8 +18,8 @@ from dotenv import load_dotenv
 
 # This personal packages are causing conflicts because are not well imported in Windows environment
 # Change inside the git cloned repository is needed.
-#from backend.backend import load_env_vars
-#from utils.colors import Colors
+from backend.backend import load_env_vars
+from utils.colors import Colors
 
 
 def get_private_ip():
@@ -46,7 +46,7 @@ def get_private_network():
                 try:
                     # Check if it's a private IP and not a loopback
                     ip_obj = ipaddress.ip_interface(f"{ip}/24")  # Temporary mask
-                    if ip_obj.is_private and not ip.startswith("127.") and not ip.startswith("172."):
+                    if ip_obj.is_private and not ip.startswith("127."):
                         # Dynamically calculate the actual network range
                         network = ip_obj.network
                         print(Colors.BOLD_WHITE + f"[+] Found private IP: " + Colors.ORANGE +  f"{ip}" + Colors.BOLD_WHITE + " on interface " + Colors.GREEN + f"{iface}" + Colors.R)
@@ -68,7 +68,7 @@ def scan_nmap(scan_dir):
     print(Colors.GREEN + f"[!] Solving to {private_range}" + Colors.R)
 
     # Create timestamped scan result filename
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     print(Colors.BOLD_WHITE + f"[!] Start private network scan on " + Colors.ORANGE + f" {private_range} " + Colors.R + "at " + Colors.CYAN + f"{timestamp}" + Colors.R)
     os.makedirs(scan_dir, exist_ok=True)
     scan_result = os.path.join(scan_dir, f"{timestamp}_nmap.xml")
@@ -117,9 +117,9 @@ if __name__ == "__main__":
     test_path = os.path.join(test_dir,"test1")
 
     execution_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open(test_path, 'a') as file:
-        print(f"Logged: {execution_date}\tinto {test_path}")
-        file.write(f"{execution_date}\t{__file__}\n")
+    #with open(test_path, 'a') as file:
+        #print(f"Logged: {execution_date}\tinto {test_path}")
+        #file.write(f"{execution_date}\t{__file__}\n")
 
 
     # Scan attempt

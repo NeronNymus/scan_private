@@ -16,11 +16,6 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 
-
-
-
-
-
 if __name__ == "__main__":
 
     # Load environment variables from .env file
