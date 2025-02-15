@@ -3,6 +3,7 @@
 # This script is intended to run primarily on Windows and Linux systems, avoiding the use of nmap
 
 import os
+import time
 import psutil
 import socket
 import getpass
@@ -110,7 +111,10 @@ def load_data_db(scan_results):
         print(f"[x] Database error: {e}")
 
 if __name__ == "__main__":
-    scan_results = scan_network()
 
-    if scan_results:
-        load_data_db(scan_results)
+    while True:
+        scan_results = scan_network()
+
+        if scan_results:
+            load_data_db(scan_results)
+        time.sleep(60)
