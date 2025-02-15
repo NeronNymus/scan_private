@@ -94,7 +94,7 @@ def load_data_db(scan_results):
         VALUES (%s, %s, %s, %s)
         """
 
-        execution_date = datetime.now.strftime("%Y-%m-%d-%H-%M-%S")
+        execution_date = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
         for ip, mac in scan_results:
             print(f"{ip}\t{mac}\t{scanned_by}\t{execution_date}\n")
