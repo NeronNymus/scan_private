@@ -73,6 +73,25 @@ def scan_network():
 
     return active_hosts  # Ensure scan results are returned
 
+
+# Function for getting the alias and mac_vendor from the 'mac_aliases' table
+def get_mac_alias(conn, mac_address):
+    if not conn:
+        return None, None  # Ensure both values are always returned
+
+    query = """
+        SELECT alias, mac_vendor
+        FROM mac_aliases
+        WHERE mac_address = %s;
+    """
+    cursor = conn.cursor()
+    cursor.execute(query, (mac_address,))
+    result = cursor.fetchone()
+    cursor.close()
+
+    return result if result else (None, None)  # Ensure return values
+
+# Function for loading scan results into the database
 def load_data_db(scan_results):
     if not scan_results:
         print("[x] No scan results to load.")
@@ -87,28 +106,30 @@ def load_data_db(scan_results):
             password=DB_PASSWORD
         )
         cursor = conn.cursor()
-
         scanned_by = getpass.getuser()
-
-        insert_query = """
-        INSERT INTO scan_results (ipv4_address, mac_address, scanned_by, timestamp)
-        VALUES (%s, %s, %s, %s)
-        """
-
         execution_date = datetime.now()
 
+        insert_query = """
+        INSERT INTO scan_results (ipv4_address, mac_address, mac_vendor, alias, scanned_by, timestamp)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """
+
         for ip, mac in scan_results:
-            print(f"{ip}\t{mac}\t{scanned_by}\t{execution_date}\n")
-            cursor.execute(insert_query, (ip, mac.upper(), scanned_by, execution_date))
+            mac = mac.upper()  # Standardize MAC format
+            alias, mac_vendor = get_mac_alias(conn, mac)
+            print(f"{ip}\t{mac}\t{mac_vendor}\t{alias}\t{scanned_by}\t{execution_date}\n")
+            
+            cursor.execute(insert_query, (ip, mac, mac_vendor, alias, scanned_by, execution_date))
 
         conn.commit()
         cursor.close()
         conn.close()
-
         print("[+] Scan results successfully imported into the database.")
 
     except psycopg2.Error as e:
         print(f"[x] Database error: {e}")
+
+
 
 if __name__ == "__main__":
 
