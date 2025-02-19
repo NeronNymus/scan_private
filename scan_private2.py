@@ -36,26 +36,30 @@ def get_private_ip():
     return private_ip
 
 def get_private_network():
-    # Get all network interfaces and their addresses
+    """
+    Finds the private network range of the first detected private IPv4 address 
+    on the system, using its correct subnet mask.
+    """
     interfaces = psutil.net_if_addrs()
-    
+
     for iface, addrs in interfaces.items():
         for addr in addrs:
             if addr.family == socket.AF_INET:  # Only consider IPv4 addresses
                 ip = addr.address
+                netmask = addr.netmask  # Get the correct subnet mask
+                
                 try:
-                    # Check if it's a private IP and not a loopback
-                    ip_obj = ipaddress.ip_interface(f"{ip}/24")  # Temporary mask
+                    ip_obj = ipaddress.IPv4Network(f"{ip}/{netmask}", strict=False)
+                    
                     if ip_obj.is_private and not ip.startswith("127."):
-                        # Dynamically calculate the actual network range
-                        network = ip_obj.network
-                        print(Colors.BOLD_WHITE + f"[+] Found private IP: " + Colors.ORANGE +  f"{ip}" + Colors.BOLD_WHITE + " on interface " + Colors.GREEN + f"{iface}" + Colors.R)
-                        return str(network)
+                        print(f"[+] Found private IP: {ip} on interface {iface}")
+                        return str(ip_obj)
                 except ValueError:
                     continue
 
     print("[x] No valid private IP address found on this machine.")
     return None
+
 
 def scan_nmap(scan_dir):
     # Get the private IP range
